@@ -1,0 +1,39 @@
+.object {
+  display: flex;
+  background: white;
+  margin-bottom: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.1rem 0.1rem;
+  width: 80%;
+  height: 55px;
+  border-radius: 10px;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
+  transition: all 0.2s;
+  overflow: hidden;
+
+  &:hover {
+    scale: 1.05;
+  }
+
+}
+
+
+::ng-deep.text {
+  &.hover {
+    border-radius: 5px;
+
+    &.aktiv {
+      background: rgba(244, 45, 45, 0.2);
+    }
+
+    &.jugend{
+      background: rgba(143, 200, 230, 0.4);
+    }
+  }
+}

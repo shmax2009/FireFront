@@ -1,0 +1,111 @@
+@import "src/app/main-styles";
+
+.content {
+  display: flex;
+  flex-direction: row;
+  background-color: $beige;
+  height: 33.875rem;
+  width: 49.875rem;
+  border-radius: 20px;
+  margin: auto;
+  box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.25);
+}
+
+.container {
+  display: flex;
+  height: 100%;
+}
+
+.image {
+  display: flex;
+  border-bottom-left-radius: 20px !important;
+  border-top-left-radius: 20px !important;
+  width: 30%;
+  background-color: aquamarine;
+}
+
+.log-in {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+
+
+.welcome-msg {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15%;
+  font-size: 1.4rem;
+  color: #D16C54;
+}
+
+.login-msg {
+  margin: 10% auto 5%;
+  font-size: 2rem;
+}
+
+.input {
+  width: 58%;
+  //margin-left: auto;
+  //margin-right: auto;
+  padding: 0.1rem 1rem;
+  border: none;
+  outline: none;
+  font-size: 1.5rem;
+  background: #EDE2D7;
+  margin-top: 5%;
+  color: black;
+  border-radius: 10px;
+}
+
+input::placeholder {
+  color: #A19A92;
+}
+
+.button {
+  margin-top: 5%;
+  display: flex;
+  background-color: #D16C54;
+  width: 70%;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: auto;
+  height: 2.5rem;
+  color: #F8B311;
+  transition: all 0.1s;
+  text-shadow: -0.2px 0 black, 0 0.2px black, 0.2px 0 black, 0 -0.2px black;
+  font-size: 1.5rem;
+  font-weight: 600;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: #a75643;
+  }
+
+  &:active {
+    transform: scale(1.02, 1.02);
+    border: 3px solid #D16C54;
+  }
+
+}
+
+.zrt {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.tick {
+  display: flex;
+  height: 2.5rem !important;
+  width: 7%;
+  margin-top: 5%;
+  border: none;
+  outline: none;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  background: #EDE2D7;
+  //margin-: auto;
+}
