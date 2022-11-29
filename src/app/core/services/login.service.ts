@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Config} from "../../Config";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {UserLogin} from "../models/UserLogin";
 import {environment} from "../../../environments/environment";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +19,9 @@ export class LoginService {
     formData.set("username", user.username);
     formData.set("password", user.password);
     return this.http.post<Response>(this.url + '/api/public/login ', formData);
+  }
+
+  check():Observable<boolean> {
+    return this.http.get<boolean>(this.url + '/api/admin/check')
   }
 }

@@ -1,7 +1,8 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {compareNumbers} from "@angular/compiler-cli/src/version_helpers";
-import {filter} from "rxjs";
-import {uniqueNamesGenerator, Config, adjectives, colors, animals, names, starWars} from 'unique-names-generator';
+import {Component, OnInit} from '@angular/core';
+import {UsersService} from "../../core/services/users.service";
+import {LoginService} from "../../core/services/login.service";
+import {Router} from "@angular/router";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-main-seite',
@@ -11,81 +12,71 @@ import {uniqueNamesGenerator, Config, adjectives, colors, animals, names, starWa
 
 
 export class MainSeiteComponent implements OnInit {
-  thema: Thema = Thema.aktiv;
-  filter: string = "";
-  public users: User[] = [];
-  colorStyle = "";
-  isSelected: boolean = false;
-  innerWidth = 0;
+  theme: Theme = Theme.aktiv;
 
-  constructor() {
+  users: User[] = [];
+
+  isSearchFieldOpen: boolean = false;
+
+  readonly MAX_MOBILE_WIDTH: number = 550;
+
+  filter: string = "";
+
+  constructor(private usersService: UsersService, private loginService: LoginService, private router: Router) {
 
   }
 
   ngOnInit(): void {
-    //TODO
-    this.generator();
-    setInterval(() =>{
-      this.innerWidth = window.innerWidth;
+    this.redirect();
+    this.usersService.getAdults().subscribe((res) => {
+      res.forEach(adult => {
+        this.users.push(new User(false, adult.surname, adult.name))
+      })
     })
   }
 
-
-  generator() {
-    let count = 80;
-    for (let i = 0; i < count; i++) {
-
-      let surname = uniqueNamesGenerator({
-        dictionaries: [starWars]
-      })
-      let name = surname.split(' ')[0]
-      surname = surname.split(' ').slice(1).join()
-      this.users.push(new User(false, name, surname));
-    }
-    for (let i = 0; i < count; i++) {
-      let surname = uniqueNamesGenerator({
-        dictionaries: [starWars]
-      })
-      let name = surname.split(' ')[0]
-      surname = surname.split(' ').slice(1).join()
-      surname += " Jr."
-      this.users.push(new User(true, name, surname));
-    }
+  redirect() {
+    this.loginService.check().pipe(
+      () => {
+        this.router.navigate(['/anmelden']).then(() => {})
+        return new Observable();
+      }
+    )
   }
+
 
   isSelect(id: number): string {
     if (id == 2) {
-      if (this.isSelected)
+      if (this.isSearchFieldOpen)
         return "selected"
       else
         return "";
     }
 
-    let needThema: Thema = (id == 0) ? Thema.aktiv : Thema.jugend;
-    if (this.thema == needThema)
+    let needTheme: Theme = (id == 0) ? Theme.aktiv : Theme.jugend;
+    if (this.theme == needTheme)
       return "select";
     else
       return "unselect";
   }
 
-  selectThema(themaName: String) {
-    let thema: Thema = (themaName == "aktiv") ? Thema.aktiv : Thema.jugend;
-    this.thema = thema;
+  selectTheme(themeName: String): void {
+    this.theme = (themeName == "aktiv") ? Theme.aktiv : Theme.jugend;
   }
 
-
-  searchUser() {
-    this.colorStyle = this.thema;
-    let isJugend = this.thema == Thema.jugend;
-    console.log(this.filter)
+  searchUser(): User[] {
     return this.users.filter(user => {
-      return user.isJugend == isJugend && ((user.Name + " " + user.Vorname).toLowerCase().indexOf(this.filter.toLowerCase()) != -1);
+      return user.isJugend == (this.theme == Theme.jugend) && ((user.Name + " " + user.Vorname).toLowerCase().indexOf(this.filter.toLowerCase()) != -1);
     })
+  }
+
+  isMobile(): boolean {
+    return window.innerWidth <= this.MAX_MOBILE_WIDTH;
   }
 }
 
 
-enum Thema {
+enum Theme {
   jugend = "jugend",
   aktiv = "aktiv",
 }

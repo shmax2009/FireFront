@@ -1,25 +1,23 @@
-<div class="canvas" [ngClass]="thema">
-  <header class="header" [ngClass]="thema">
-    <span class="switch-text" [ngClass]="[thema, isSelect(0)]" (click)="selectThema('aktiv')">Aktiv</span>
-    <span class="switch-text" [ngClass]="[thema, isSelect(1)]" (click)="selectThema('jugend')">Jugend</span>
-    <span class="title" [ngClass]="thema" *ngIf="innerWidth >=550">Kleiderkammer</span>
+<div class="canvas" [ngClass]="theme">
+  <header class="header" [ngClass]="theme">
+    <span class="switch-text" [ngClass]="[theme, isSelect(0)]" (click)="selectTheme('aktiv')">Aktiv</span>
+    <span class="switch-text" [ngClass]="[theme, isSelect(1)]" (click)="selectTheme('jugend')">Jugend</span>
+    <span class="title" [ngClass]="theme" *ngIf="isMobile">Kleiderkammer</span>
   </header>
 
   <header class="search-header">
-    <div class="search-content" [ngClass]="[thema,isSelect(2)]" (click)="isSelected = true"
-         (clickOutside)="isSelected = false">
-      <span class="search-text" [ngClass]="[thema,isSelect(2)]">suchen</span>
+    <div class="search-content" [ngClass]="[theme,isSelect(2)]" (click)="isSearchFieldOpen = true"
+         (clickOutside)="isSearchFieldOpen = false">
+      <span class="search-text" [ngClass]="[theme,isSelect(2)]">suchen</span>
       <input class="search-input" placeholder="suchen" [ngClass]="isSelect(2)" [(ngModel)]="filter">
-
       <div class="search-result">
         <ng-container *ngIf="searchUser().length != 0">
           <ng-container *ngFor="let user of searchUser()">
-            <app-user [Name]="user.Name" [Vorname]="user.Vorname" [filter]="filter"
-                      [colorPalette]="colorStyle"></app-user>
+            <user-element [Name]="user.Name" [Vorname]="user.Vorname" [filter]="filter" [theme]="theme"></user-element>
           </ng-container>
         </ng-container>
         <ng-container *ngIf="searchUser().length == 0">
-          <span class="no-results-text"> Keine Results </span>
+          <span class="no-results-text">Keine Results</span>
         </ng-container>
       </div>
     </div>

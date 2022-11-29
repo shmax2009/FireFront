@@ -8,8 +8,6 @@ import {LoginService} from "../../core/services/login.service";
 })
 export class AnmeldenSeiteComponent implements OnInit {
   isOpen: boolean = true;
-  username = "";
-  password = "";
 
   constructor(private loginService: LoginService) {
   }
@@ -17,10 +15,10 @@ export class AnmeldenSeiteComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  login() {
+  login(username: string, password: string) {
     this.loginService.login({
-      username: this.username,
-      password: this.password
+      username: username,
+      password: password
     }).subscribe({
       next: res => {
         // @ts-ignore
@@ -30,5 +28,9 @@ export class AnmeldenSeiteComponent implements OnInit {
       }
     })
 
+  }
+
+  isOpenTheme(): string {
+    return this.isOpen ? 'password' : 'text';
   }
 }

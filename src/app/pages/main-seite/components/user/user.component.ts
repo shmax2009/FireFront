@@ -1,8 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {starWars, uniqueNamesGenerator} from "unique-names-generator";
 
 @Component({
-  selector: 'app-user',
+  selector: 'user-element',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
@@ -11,8 +10,9 @@ export class UserComponent implements OnInit {
   @Input() Name!: String;
   @Input() Vorname!: String;
   @Input() filter!: string;
-  @Input() colorPalette!: string;
+  @Input() theme!: string;
 
+  readonly EMPTY_CHARACTER: string = "⠀";
   private content!: string;
 
 
@@ -21,8 +21,8 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.content = this.Name + " " + this.Vorname;
-    this.content = this.content.replace(new RegExp(" ", "gi"), match => {
-      return "⠀";
+    this.content = this.content.replace(new RegExp(" ", "gi"), () => {
+      return this.EMPTY_CHARACTER;
     });
   }
 
@@ -30,12 +30,13 @@ export class UserComponent implements OnInit {
     if (!this.filter) {
       return this.content;
     }
-    let nF = this.filter.replace(new RegExp(" ", "gi"), match => {
-      return "⠀";
+    let withNormalSpace = this.filter.replace(new RegExp(" ", "gi"), () => {
+      return this.EMPTY_CHARACTER;
     });
-    return this.content.replace(new RegExp(nF, "gi"), match => {
-      return '<span class="text hover ' + this.colorPalette + '">' + match + '</span>';
+    return this.content.replace(new RegExp(withNormalSpace, "gi"), match => {
+      return '<span class="text hover ' + this.theme + '">' + match + '</span>';
     });
   }
 
 }
+

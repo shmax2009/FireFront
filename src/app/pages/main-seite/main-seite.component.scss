@@ -112,7 +112,6 @@
   width: 95px;
   height: 27px;
   border-radius: 10px;
-
   &.aktiv {
     background: #F4CBC6;
     color: #A19A92;
@@ -134,6 +133,7 @@
   -moz-transition: all 0.8s ease-out;
   -o-transition: all 0.8s ease-out;
   transition: all 0.8s ease-out;
+
 }
 
 .search-text {
@@ -182,14 +182,12 @@
     width: 85%;
     height: 10%;
   }
+  &::placeholder{
+    color: #A19A92;
+  }
 
   transition: all 1s ease-out;
 }
-
-.search-input::placeholder {
-  color: #A19A92;
-}
-
 
 .search-result {
   display: flex;
